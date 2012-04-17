@@ -185,7 +185,7 @@ Fnextp.test <- function(wts, detcomp, p, type)
 
   df   <- c(frequency(wts), length(wts) - length(coef(lm2)) - p)
   Fnextp <- ((RSS0-RSS1)/df[1]) / (RSS1/(df[2]-df[1]))
-  pval <- 1 - pf(q=Fnextp, df1=df[1], df2=df[2], log=FALSE)
+  pval <- 1 - pf(q=Fnextp, df1=df[1], df2=df[2], log.p=FALSE)
 
   ref1 <- c(1, 0.1, 0.05, 0.01, 0.001)
   ref2 <- c(" ", ".", "*", "**", "***")
@@ -206,7 +206,7 @@ Fpar.test <- function(wts, detcomp, p)
 
   df   <- c((frequency(wts)-1)*p, length(wts) - length(coef(rmd)) - p)
   Fpar <- ((RSS0-RSS1)/df[1]) / (RSS1/(df[2]-df[1]))
-  pval <- 1 - pf(q=Fpar, df1=df[1], df2=df[2], log=FALSE)
+  pval <- 1 - pf(q=Fpar, df1=df[1], df2=df[2], log.p=FALSE)
 
   ref1 <- c(1, 0.1, 0.05, 0.01, 0.001)
   ref2 <- c(" ", ".", "*", "**", "***")
@@ -230,7 +230,7 @@ Fsh.test <- function(res, s)
 
   df <- c((s-1), length(res) - length(coef(lm1)))
   Fsh <- ((RSS0-RSS1)/df[1]) / (RSS1/(df[2]-df[1]))
-  pval <- 1 - pf(q=Fsh, df1=df[1], df2=df[2], log=FALSE)
+  pval <- 1 - pf(q=Fsh, df1=df[1], df2=df[2], log.p=FALSE)
 
   ref1 <- c(1, 0.1, 0.05, 0.01, 0.001)
   ref2 <- c(" ", ".", "*", "**", "***")
@@ -393,7 +393,7 @@ Fpari.piar.test <- function(wts, detcomp, p, type)
 
   df <- c((frequency(wts)-1), length(wts) - length(coef(h0md)) - p)
   Fstat <- ((RSS0-RSS1)/df[1]) / (RSS1/(df[2]-df[1]))
-  pval <- 1 - pf(q=Fstat, df1=df[1], df2=df[2], log=FALSE)
+  pval <- 1 - pf(q=Fstat, df1=df[1], df2=df[2], log.p=FALSE)
 
   ref1 <- c(1, 0.1, 0.05, 0.01, 0.001)
   ref2 <- c(" ", ".", "*", "**", "***")
@@ -917,64 +917,8 @@ setMethod("show", "MVPIAR",
   list(Phi0=Phi0, Phi1=Phi1, Phi01ev=Phi01ev, tvias=tvias)
 }
 
-##~ Ver hacer método hasta obtener seas.data.
-##~ ver usar cbind.ts.
-bbplot <- function(wts)
-{
-  colour <- c("SlateBlue","SeaGreen","red","magenta")
-  seas.data <- split(wts, cycle(wts))
 
-  t0 <- c(rep(1, start(wts)[2]-1), rep(0, frequency(wts)-(start(wts)[2]-1)))
-  for(i in 1:frequency(wts))
-    assign(paste("season", i, sep=""), ts(seas.data[[i]], frequency=1, start=start(wts)[1]+t0[i]))
 
-  if(frequency(wts) == 4){
-    seas.labels <- c("Q1","Q2","Q3","Q4")
-    seas.data <- list(season1, season2, season3, season4)
-    opar <- par(las=1)
-    ts.plot(season1, season2, season3, season4, lty=c(1,2,3,4), xlab="", ylab="",
-            xlim=c(start(wts)[1], end(wts)[1]+2.5)) ##~ col=colour
-    par(opar)
-    for(i in 1:4)
-      text(end(seas.data[[i]])[1]+2, seas.data[[i]][length(seas.data[[i]])], seas.labels[i])
-      ##~ , col = colour[i])
-  }
-
-  if(frequency(wts) == 12){
-    seas.data <- list(season1, season2, season3, season4, season5, season6,
-                      season7, season8, season9, season10, season11, season12)
-    xlim <- c(start(wts)[1], end(wts)[1]+1.5); ylim <- c(min(wts), max(wts))
-
-    opar <- par(mfrow=c(2,2), las=1)
-    ts.plot(season1, season2, season3, lty=c(1,2,3), xlab="", ylab="", xlim=xlim, ylim=ylim) ##~ col=colour)
-    for(i in 1:3)
-      text(end(seas.data[[i]])[1]+1, seas.data[[i]][length(seas.data[[i]])], month.abb[i]) ##~ , col =  colour[i])
-    ts.plot(season4, season5, season6, lty=c(1,2,3), xlab="", ylab="", xlim=xlim, ylim=ylim) ##~ col=colour)
-    for(i in 4:6)
-      text(end(seas.data[[i]])[1]+1, seas.data[[i]][length(seas.data[[i]])], month.abb[i]) ##~ , col = colour[i])
-    ts.plot(season7, season8, season9, lty=c(1,2,3), xlab="", ylab="", xlim=xlim, ylim=ylim) ##~ col=colour)
-    for(i in 7:9)
-      text(end(seas.data[[i]])[1]+1, seas.data[[i]][length(seas.data[[i]])], month.abb[i]) ##~ , col = colour[i])
-    ts.plot(season10, season11, season12, lty=c(1,2,3), xlab="", ylab="", xlim=xlim, ylim=ylim) ##~ col=colour)
-    for(i in 10:12)
-      text(end(seas.data[[i]])[1]+1, seas.data[[i]][length(seas.data[[i]])], month.abb[i]) ##~ , col = colour[i])
-    par(opar)
-  }
-}
-
-plotpdiff <- function(x){
-  if (!(class(x) == "fit.piartsm"))
-    stop("\n Object is not of class 'fit.piartsm'.\n")
-
-  opar <- par(las=1)
-  layout(matrix(c(1, 1, 2, 3), 2 , 2, byrow=TRUE))
-  plot(x@pdiff.data, main="Periodically differenced data", ylab="", xlab="")
-  bbplot(x@pdiff.data)
-  monthplot(x@pdiff.data, ylab="")
-  ##acf(x@pdiff.data, main="Autocorrelations", ylab="", na.action=na.pass)
-  ##pacf(x@pdiff.data, main="Partial autocorrelations", ylab="", na.action=na.pass)
-  par(opar)
-}
 ##~ monthplot, main="Seasonal subseries"
 
 acf.ext1 <- function(wts, transf.type, perdiff.coeffs, type, lag.max, showcat, plot)
