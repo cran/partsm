@@ -1,6 +1,6 @@
 Package: partsm
-Version: 1.1-3
-Date: 2020-11-24
+Version: 1.1-4
+Date: 2025-04-21
 Title: Periodic Autoregressive Time Series Models
 Authors@R: 
     c(person(given = "Javier",
@@ -18,9 +18,9 @@ Description: Basic functions to fit and predict periodic autoregressive time ser
 License: GPL-2
 URL: https://github.com/MatthieuStigler/partsm
 NeedsCompilation: no
-Packaged: 2020-11-25 03:44:11 UTC; matifou
+Packaged: 2025-04-21 17:19:07 UTC; matifou
 Author: Javier Lopez-de-Lacalle [aut, cph],
   Matthieu Stigler [cre] (<https://orcid.org/0000-0002-6802-4290>)
 Maintainer: Matthieu Stigler <Matthieu.Stigler@gmail.com>
 Repository: CRAN
-Date/Publication: 2020-11-25 10:40:02 UTC
+Date/Publication: 2025-04-21 17:30:01 UTC

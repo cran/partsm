@@ -1,4 +1,21 @@
 
+R version 4.5.0 (2025-04-11) -- "How About a Twenty-Six"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
 
 > library(partsm)
 > 
@@ -854,55 +871,17 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ## Fpari.piar.test
 > Fpari1.out <- Fpari.piar.test(wts=lgergnp, detcomp=detcomp, p=2, type="PARI1")
-> options(digits=3)
-> summary(Fpari1.out)
+> Fpari1.out
 ----
   Test for a parameter restriction in a PAR model .
 
-  F-statistic: 20.8 on 3 and 114 DF, p-value: 7.88e-11 *** 
+  F-statistic: 20.83 on 3 and 114 DF, p-value: 7.884426e-11 *** 
 
   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
-----
-----
-## Fitted model for the null hypothesis.
-
-Call:
-lm(formula = MLag[, 1] ~ 0 + MDT)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--0.04191 -0.01163  0.00058  0.01045  0.05259 
-
-Coefficients:
-               Estimate Std. Error t value Pr(>|t|)    
-MDT..SeasDum.1 -0.06936    0.00335  -20.72  < 2e-16 ***
-MDT..SeasDum.2 -0.02176    0.01238   -1.76    0.081 .  
-MDT..SeasDum.3  0.01565    0.00645    2.43    0.017 *  
-MDT..SeasDum.4  0.05215    0.00638    8.18  4.6e-13 ***
-MDTRegVar.1     0.25094    0.11231    2.23    0.027 *  
-MDTRegVar.2    -0.88955    0.17761   -5.01  2.0e-06 ***
-MDTRegVar.3     0.93738    0.14558    6.44  3.0e-09 ***
-MDTRegVar.4    -0.83356    0.10684   -7.80  3.2e-12 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Residual standard error: 0.0176 on 114 degrees of freedom
-  (2 observations deleted due to missingness)
-Multiple R-squared:  0.896,	Adjusted R-squared:  0.889 
-F-statistic:  123 on 8 and 114 DF,  p-value: <2e-16
-
-----
-----
-## Fitted model for the alternative hypothesis.
-    Estimate        Std. Error        t value        Pr(>|t|)    
- Min.   :-0.676   Min.   :0.0095   Min.   :-4.4   Min.   :0.000  
- 1st Qu.:-0.198   1st Qu.:0.0309   1st Qu.:-1.1   1st Qu.:0.000  
- Median : 0.338   Median :0.1204   Median : 2.3   Median :0.001  
- Mean   : 0.242   Mean   :0.0996   Mean   :25.4   Mean   :0.101  
- 3rd Qu.: 0.689   3rd Qu.:0.1534   3rd Qu.:46.8   3rd Qu.:0.026  
- Max.   : 1.025   Max.   :0.1950   Max.   :96.0   Max.   :0.953  
-> options(digits=3)
+> # options(digits=3)
+> # summary(Fpari1.out)
+> # options(digits=3)
 > 
 > ## Fit a PIAR(2) model with seasonal intercepts.
 > out.piar <- fit.piar(wts=lgergnp, detcomp=detcomp, p=2)
@@ -1027,5 +1006,5 @@ MDT..SeasDum.3  MDT..SeasDum.4
 > options(digits=7)
 > 
 > proc.time()
-utilisateur     système      écoulé 
-      1.016       0.176       1.208 
+   user  system elapsed 
+  0.261   0.029   0.273 
